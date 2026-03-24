@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'portfolio'
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,3 +82,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images): https://docs.djangoproject.com/en/6.0/howto/static-files/
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'portfolio' / 'static']  # NEW: serve our CSS
+
+# Auth settings for barebones login (name/password only)
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'

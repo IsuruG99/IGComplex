@@ -1,0 +1,75 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+
+<div class="mb-12">
+    <a class="group inline-flex items-center gap-2 text-primary font-label text-[11px] uppercase tracking-[0.2em] transition-all" href="{% url 'projects_list' %}">
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        <span class="border-b border-transparent group-hover:border-primary">Back to Archive</span>
+    </a>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <div class="lg:col-span-8">
+        <header class="mb-10">
+            <h1 class="text-5xl md:text-6xl font-headline font-black text-primary uppercase tracking-tighter leading-none mb-6">
+                {{ project.title }}
+            </h1>
+            <div class="inline-block bg-surface-container-high px-4 py-2 border-l-2 border-primary">
+                <p class="font-label text-on-surface-variant uppercase tracking-[0.3em] text-[10px] font-bold">
+                    REF_ID: 00{{ project.pk }} // {{ project.year }}
+                </p>
+            </div>
+        </header>
+
+        <div class="bg-surface-container-lowest border border-outline-variant/20 p-2">
+            <div class="relative aspect-video w-full bg-surface-container-low overflow-hidden">
+                {% if project.screenshot_url %}
+                <img src="{{ project.screenshot_url }}" alt="Project Visual" class="w-full h-full object-cover">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center text-outline font-label text-[10px] tracking-widest">
+                    [ NO_IMAGE_LOADED ]
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="lg:col-span-4 space-y-10">
+        <section>
+            <h2 class="font-headline text-[13px] text-on-surface font-bold uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
+                <span class="w-1.5 h-4 bg-primary"></span>
+                Description
+            </h2>
+            <div class="bg-surface-container/50 p-6 border border-outline-variant/10">
+                <p class="text-[15px] text-on-surface-variant leading-relaxed font-body" style="font-family: 'Inter', sans-serif;">
+                    {{ project.brief_desc }}
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="font-headline text-[13px] text-on-surface font-bold uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
+                <span class="w-1.5 h-4 bg-primary"></span>
+                Technical Stack
+            </h2>
+            <div class="bg-surface-container-low border border-outline-variant/10 p-6">
+                <div class="tech-stack-list text-[13px] tracking-wide">
+                    {{ project.tech_stack }}
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-2 gap-4 pt-4">
+            <div class="bg-surface-container-low p-4 border border-outline-variant/10">
+                <p class="font-label text-[9px] text-zinc-600 font-bold uppercase tracking-[0.3em] mb-1">Status</p>
+                <p class="font-headline text-[12px] text-primary font-bold uppercase tracking-widest">Live</p>
+            </div>
+            <div class="bg-surface-container-low p-4 border border-outline-variant/10">
+                <p class="font-label text-[9px] text-zinc-600 font-bold uppercase tracking-[0.3em] mb-1">Stack</p>
+                <p class="font-headline text-[12px] text-primary font-bold uppercase tracking-widest">Full_Stack</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
