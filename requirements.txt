@@ -2,3 +2,7 @@ Django>=5.1
 psycopg2-binary
 gunicorn
 django-environ
+django-storages 
+boto3
+Pillow
+django-cleanup

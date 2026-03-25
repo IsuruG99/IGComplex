@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="grid grid-auto">
+
+    <div class="card" style="text-align: center;">
+        <img src="https://thawxejtbmdrolimrprz.supabase.co/storage/v1/object/sign/portfolio/other/avatar.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82NTNjYzhkYS1kNTg5LTQ2MWUtOGI0Mi02Njk0NzY3YTBiNDIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8vb3RoZXIvYXZhdGFyLnBuZyIsImlhdCI6MTc3NDQyMjkxOCwiZXhwIjoxODA1OTU4OTE4fQ.lFR-UxdrT9tBzLIl0w6Q19pDSbOiBvExYVlRr3-LXGU" alt="Me" style="margin: 0 auto 1.5rem; width: 100%; max-width: 280px;">
+        <h1 class="headline" style="color: var(--teal); font-size: 2rem;">I.G.Complex</h1>
+        <p class="mono label" style="margin-top: 0.5rem;">Isuru Ganegoda</p>
+    </div>
+
+    <div class="card" style="display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;">
+        <div>
+            <p class="breadcrumb">// STATUS: ACTIVE / AVAILABLE</p>
+            <h2 class="headline" style="font-size: clamp(2rem, 4vw, 3rem); margin-top: 0.5rem;">
+                Software<br>Engineering<br><span style="color: var(--teal);">Graduate</span>
+            </h2>
+        </div>
+        <p style="color: var(--dim); max-width: 480px;">
+            Backend focused. Linux enthusiast.<br>
+            <span class="mono" style="font-size: 0.85rem; color: var(--muted);">Arch + Hyprland daily driver.</span>
+        </p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{% url 'projects_list' %}" class="btn btn-teal">View Projects</a>
+            <a href="{% url 'cv' %}" class="btn btn-outline-teal">View CV</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div style="display: flex; justify-content: center; align-items: center; min-height: 55vh;">
+    <div class="card" style="width: 100%; max-width: 420px;">
+
+        <div style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--outline);">
+            <p class="breadcrumb">// SYSTEM_AUTH</p>
+            <h1 class="headline" style="font-size: 1.8rem; margin-top: 0.4rem; color: var(--teal);">Login</h1>
+            <p class="mono label" style="margin-top: 0.4rem;">user: igcomplex@arch_linux</p>
+        </div>
+
+        <form method="post" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username">Access_Key</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Pass_Hash</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn btn-teal btn-full" style="margin-top: 0.5rem;">
+                Authenticate →
+            </button>
+        </form>
+
+        <p class="mono label" style="margin-top: 1.5rem; text-align: center; opacity: 0.4;">
+            Warning: unauthorized access is logged.
+        </p>
+
+    </div>
+</div>
+
+{% endblock %}

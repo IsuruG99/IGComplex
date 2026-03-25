@@ -3,7 +3,7 @@ FROM python:3.12-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE=igcomplex.settings
+ENV DJANGO_SETTINGS_MODULE=core.settings
 
 # Set work directory
 WORKDIR /app
@@ -16,8 +16,7 @@ RUN apt-get update && apt-get install -y \
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
-
+    pip install --default-timeout=100 -r requirements.txt
 # Copy project
 COPY . .
 

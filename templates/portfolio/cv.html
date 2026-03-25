@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-header divider-red">
+    <p class="breadcrumb label-red">// SOURCE: /static/assets/CV.PDF</p>
+    <h1 class="headline">Curriculum <span style="color: var(--red);">Vitae</span></h1>
+    <div style="margin-top: 1.5rem;">
+        <a href="{% static 'portfolio/pdf/cv.pdf' %}" target="_blank" class="btn btn-red">
+            Download PDF
+        </a>
+    </div>
+</div>
+
+<div class="grid grid-auto">
+
+    <!-- Profile -->
+    <div class="card col-span-2">
+        <p class="label label-teal" style="margin-bottom: 1rem;">PROFILE_SUMMARY</p>
+        <p style="font-size: 1.1rem; line-height: 1.75; color: var(--dim);">
+            Motivated Software Engineering Graduate focused on backend systems.
+            Specialized in Python, SQL architectures, and AWS. Currently optimizing
+            development workflows on Arch Linux with Neovim.
+        </p>
+    </div>
+
+    <!-- Status -->
+    <div class="card">
+        <p class="label label-red">STATUS</p>
+        <p class="headline" style="font-size: 1.5rem; margin-top: 1rem;">Open for Junior Roles</p>
+        <p class="mono label" style="margin-top: 0.4rem;">Ready for deployment</p>
+    </div>
+
+    <!-- Academic -->
+    <div class="card">
+        <p class="label label-red" style="margin-bottom: 1.5rem;">ACADEMIC_HISTORY</p>
+
+        <div style="margin-bottom: 1.75rem;">
+            <p class="mono" style="color: var(--red); font-size: 0.8rem;">2021 – 2025</p>
+            <p style="font-size: 1.1rem; margin-top: 0.25rem;">SLIIT / Bedfordshire</p>
+            <p style="color: var(--muted); font-size: 0.9rem;">BSc. (Hons) Software Engineering</p>
+        </div>
+        <div>
+            <p class="mono" style="color: var(--red); font-size: 0.8rem;">2004 – 2017</p>
+            <p style="font-size: 1.1rem; margin-top: 0.25rem;">Ananda College</p>
+            <p style="color: var(--muted); font-size: 0.9rem;">Secondary Education</p>
+        </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="card col-span-2">
+        <div class="grid grid-2" style="gap: 2rem; margin-bottom: 2rem;">
+            <div>
+                <p class="label label-teal" style="margin-bottom: 1rem;">LANGUAGES</p>
+                <ul class="mono" style="font-size: 0.95rem; line-height: 2.2;">
+                    <li>&gt; Python / Django</li>
+                    <li>&gt; Node.js / Express</li>
+                    <li>&gt; C# / .NET</li>
+                </ul>
+            </div>
+            <div>
+                <p class="label label-teal" style="margin-bottom: 1rem;">INFRASTRUCTURE</p>
+                <ul class="mono" style="font-size: 0.95rem; line-height: 2.2;">
+                    <li>&gt; AWS (Lambda / RDS)</li>
+                    <li>&gt; Arch Linux / Git</li>
+                    <li>&gt; Docker / PostgreSQL</li>
+                </ul>
+            </div>
+        </div>
+        <a href="{% url 'projects_list' %}" class="btn btn-red btn-full">
+            Access_Project_Archive.tar.gz
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

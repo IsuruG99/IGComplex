@@ -1,4 +1,13 @@
 from django.db import models
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class PortfolioScreenshotStorage(S3Boto3Storage):
+    bucket_name = 'portfolio'
+    location = 'screenshots' 
+
+class PortfolioStorage(S3Boto3Storage):
+    bucket_name = 'portfolio'
+    location = 'others'
 
 class Project(models.Model):
     """
@@ -10,7 +19,9 @@ class Project(models.Model):
     year = models.IntegerField()
     brief_desc = models.TextField()
     tech_stack = models.TextField(help_text="Comma-separated, e.g. Django, Supabase, Docker")
-    screenshot_url = models.URLField(blank=True, null=True, help_text="Public URL from Supabase Storage S3 bucket")
+    screenshot_1 = models.ImageField(storage=PortfolioScreenshotStorage(), null=True)
+    screenshot_2 = models.ImageField(storage=PortfolioScreenshotStorage(), null=True, blank=True)
+    screenshot_3 = models.ImageField(storage=PortfolioScreenshotStorage(), null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

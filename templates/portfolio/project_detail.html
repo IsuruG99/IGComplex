@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="{% url 'projects_list' %}" style="color: var(--teal); font-size: 0.9rem;">← Back to Projects</a>
+
+<div class="page-header" style="margin-top: 1.5rem;">
+    <p class="breadcrumb">// DIRECTORY: /home/igcomplex/projects/{{ project.pk }}</p>
+    <h1 class="headline" style="color: var(--teal);">{{ project.title }}</h1>
+    <p class="mono label" style="margin-top: 0.4rem;">YEAR: {{ project.year }} // REF_ID: 00{{ project.pk }}</p>
+</div>
+
+<div class="grid" style="grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: start;">
+
+    <!-- Main image -->
+    <div style="border: 2px solid var(--teal); background: #111;">
+        {% if project.screenshot_1 %}
+            <img id="main-viewer" src="{{ project.screenshot_1.url }}" alt="{{ project.title }}"
+                 style="width: 100%; height: auto;">
+        {% else %}
+            <div style="height: 360px; display: flex; align-items: center; justify-content: center;">
+                <span class="mono label">[ NO_IMAGE ]</span>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+        <div class="card">
+            <p class="label label-teal" style="margin-bottom: 0.75rem;">BRIEF DESCRIPTION</p>
+            <p style="line-height: 1.7; color: var(--dim); font-size: 0.95rem;">{{ project.brief_desc }}</p>
+        </div>
+
+        <div class="card">
+            <p class="label label-teal" style="margin-bottom: 0.75rem;">TECH STACK</p>
+            <p class="mono" style="font-size: 1rem;">{{ project.tech_stack }}</p>
+        </div>
+
+        <div class="grid grid-2" style="gap: 1rem;">
+            <div class="card">
+                <p class="label" style="margin-bottom: 0.4rem;">STATUS</p>
+                <p style="color: var(--red); font-size: 1.1rem;">Live</p>
+            </div>
+            <div class="card">
+                <p class="label" style="margin-bottom: 0.4rem;">TYPE</p>
+                <p style="color: var(--red); font-size: 1.1rem;">Full_Stack</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Thumbnail strip -->
+{% if project.screenshot_1 or project.screenshot_2 or project.screenshot_3 %}
+<div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2.5rem;">
+    {% if project.screenshot_1 %}
+    <div style="border: 1px solid var(--outline);">
+        <img src="{{ project.screenshot_1.url }}" style="width: 100%; height: auto;">
+    </div>
+    {% endif %}
+    {% if project.screenshot_2 %}
+    <div style="border: 1px solid var(--outline);">
+        <img src="{{ project.screenshot_2.url }}" style="width: 100%; height: auto;">
+    </div>
+    {% endif %}
+    {% if project.screenshot_3 %}
+    <div style="border: 1px solid var(--outline);">
+        <img src="{{ project.screenshot_3.url }}" style="width: 100%; height: auto;">
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
