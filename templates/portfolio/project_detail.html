@@ -26,25 +26,25 @@
     <!-- Sidebar -->
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
 
+      <div class="grid grid-2" style="gap: 1rem;">
+            <div class="card">
+                <p style="color: var(--red); margin-bottom: 0.4rem;">STATUS</p>
+                <p class="mono" style="font-size: 1.1rem;">{{ project.status }}</p>
+            </div>
+            <div class="card">
+                <p style="color: var(--red); margin-bottom: 0.4rem;">ROLE</p>
+                <p class="mono"style="font-size: 1.1rem;">{{ project.role }}</p>
+            </div>
+        </div>
+
         <div class="card">
-            <p class="label label-teal" style="margin-bottom: 0.75rem;">BRIEF DESCRIPTION</p>
-            <p style="line-height: 1.7; color: var(--dim); font-size: 0.95rem;">{{ project.brief_desc }}</p>
+            <p class="label label-teal" style="margin-bottom: 0.75rem;">DESCRIPTION</p>
+            <p class="mono" style="line-height: 1.7; font-size: 0.95rem;">{{ project.desc }}</p>
         </div>
 
         <div class="card">
             <p class="label label-teal" style="margin-bottom: 0.75rem;">TECH STACK</p>
             <p class="mono" style="font-size: 1rem;">{{ project.tech_stack }}</p>
-        </div>
-
-        <div class="grid grid-2" style="gap: 1rem;">
-            <div class="card">
-                <p class="label" style="margin-bottom: 0.4rem;">STATUS</p>
-                <p style="color: var(--red); font-size: 1.1rem;">Live</p>
-            </div>
-            <div class="card">
-                <p class="label" style="margin-bottom: 0.4rem;">TYPE</p>
-                <p style="color: var(--red); font-size: 1.1rem;">Full_Stack</p>
-            </div>
         </div>
 
     </div>
@@ -54,18 +54,26 @@
 {% if project.screenshot_1 or project.screenshot_2 or project.screenshot_3 %}
 <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2.5rem;">
     {% if project.screenshot_1 %}
-    <div style="border: 1px solid var(--outline);">
+    <div style="border: 1px solid var(--outline); max-width: 20rem;">
         <img src="{{ project.screenshot_1.url }}" style="width: 100%; height: auto;">
     </div>
     {% endif %}
     {% if project.screenshot_2 %}
-    <div style="border: 1px solid var(--outline);">
+    <div style="border: 1px solid var(--outline); max-width: 20rem;">
         <img src="{{ project.screenshot_2.url }}" style="width: 100%; height: auto;">
+    </div>
+    {% else %}
+    <div style="border: 1px solid var(--outline);  display: flex; max-width: 20rem; align-items: center; justify-content: center;">
+        <span class="mono label">[ NO_IMAGE ]</span>
     </div>
     {% endif %}
     {% if project.screenshot_3 %}
-    <div style="border: 1px solid var(--outline);">
+    <div style="border: 1px solid var(--outline); max-width: 20rem">
         <img src="{{ project.screenshot_3.url }}" style="width: 100%; height: auto;">
+    </div>
+    {% else %}
+    <div style="border: 1px solid var(--outline);  display: flex; max-width: 20rem; align-items: center; justify-content: center;">
+        <span class="mono label">[ NO_IMAGE ]</span>
     </div>
     {% endif %}
 </div>

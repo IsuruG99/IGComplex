@@ -2,13 +2,11 @@
 {% block content %}
 
 <div class="grid grid-auto">
-
     <div class="card" style="text-align: center;">
         <img src="https://thawxejtbmdrolimrprz.supabase.co/storage/v1/object/sign/portfolio/other/avatar.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82NTNjYzhkYS1kNTg5LTQ2MWUtOGI0Mi02Njk0NzY3YTBiNDIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8vb3RoZXIvYXZhdGFyLnBuZyIsImlhdCI6MTc3NDQyMjkxOCwiZXhwIjoxODA1OTU4OTE4fQ.lFR-UxdrT9tBzLIl0w6Q19pDSbOiBvExYVlRr3-LXGU" alt="Me" style="margin: 0 auto 1.5rem; width: 100%; max-width: 280px;">
-        <h1 class="headline" style="color: var(--teal); font-size: 2rem;">I.G.Complex</h1>
+        <h1 class="headline" style="color: var(--red); font-size: 2rem;">I.G.Complex</h1>
         <p class="mono label" style="margin-top: 0.5rem;">Isuru Ganegoda</p>
     </div>
-
     <div class="card" style="display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;">
         <div>
             <p class="breadcrumb">// STATUS: ACTIVE / AVAILABLE</p>
@@ -25,7 +23,27 @@
             <a href="{% url 'cv' %}" class="btn btn-outline-teal">View CV</a>
         </div>
     </div>
-
 </div>
-
+<div class="grid grid-auto" style="padding-top: 1.5rem;">
+    {% if user.is_authenticated %}
+        <div class="card" style="text-align: center;">
+            <h1 class="headline" style="color: var(--teal); font-size: 2rem;">Family Repo</h1>
+            <p class="mono" style="color: var(--dim); margin-top: 0.5rem;">Photo Album and Documents</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h1 class="headline" style="color: var(--red); font-size: 2rem;">Game Tracker</h1>
+            <p class="mono" style="color: var(--dim); margin-x: 0.5rem;">Pity Tracker and Upcoming Releases</p>
+            <a href="{% url 'tracker' %}" class="btn btn-red">Pity Tracker</a>
+        </div>
+    {% else %}
+        <div class="card" style="text-align: center;">
+            <h1 class="headline" style="color: var(--teal); font-size: 2rem;">Current Focus</h1>
+            <p class="mono" style="color: var(--dim); margin-top: 0.85rem;">Building a private, containerized environment using <span style="color: var(--teal);">Django</span> and <span style="color: var(--teal);">Supabase</span>. 
+                Currently focused on hosting secure media storage and family-only utilities.<p>
+            <p class="mono" style="color: var(--dim); margin-top: 0.85rem;">Assisting a colleague with cloud infrastructure—handling 
+                <span style="color: var(--teal);">AWS</span> deployment support and general Backend troubleshooting.</p>
+            <p class="mono" style="color: var(--dim); margin-top: 0.85rem;">...</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

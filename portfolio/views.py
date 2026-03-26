@@ -2,19 +2,19 @@ from django.shortcuts import render, get_object_or_404
 from .models import Project
 
 def home(request):
-    """Main landing page - My name + simple UI"""
+    """Home Page"""
     return render(request, 'portfolio/home.html', {})
 
 def cv(request):
-    """CV showcase page - PDF link (add your cv.pdf to portfolio/static/portfolio/pdf/cv.pdf)"""
+    """CV Showcase"""
     return render(request, 'portfolio/cv.html', {})
 
 def projects_list(request):
-    """Projects overview - cards, one project at a time via detail link"""
+    """Projects List"""
     projects = Project.objects.all()
     return render(request, 'portfolio/projects.html', {'projects': projects})
 
 def project_detail(request, pk):
-    """Single project sub-page: Title, Year, Desc, TechStack, Screenshot Viewer"""
+    """Project Showcase"""
     project = get_object_or_404(Project, pk=pk)
     return render(request, 'portfolio/project_detail.html', {'project': project})
