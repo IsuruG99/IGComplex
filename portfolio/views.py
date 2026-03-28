@@ -17,4 +17,5 @@ def projects_list(request):
 def project_detail(request, pk):
     """Project Showcase"""
     project = get_object_or_404(Project, pk=pk)
+    project.tech_list = [t.strip() for t in project.tech_stack.split(',')]
     return render(request, 'portfolio/project_detail.html', {'project': project})

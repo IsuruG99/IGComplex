@@ -3,79 +3,114 @@
 
 <a href="{% url 'projects_list' %}" style="color: var(--teal); font-size: 0.9rem;">← Back to Projects</a>
 
-<div class="page-header" style="margin-top: 1.5rem;">
-    <p class="breadcrumb">// DIRECTORY: /home/igcomplex/projects/{{ project.pk }}</p>
-    <h1 class="headline" style="color: var(--teal);">{{ project.title }}</h1>
-    <p class="mono label" style="margin-top: 0.4rem;">YEAR: {{ project.year }} // REF_ID: 00{{ project.pk }}</p>
+<!-- Header -->
+<div class="page-header" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <p class="breadcrumb">// DIRECTORY: /home/igcomplex/projects/{{ project.pk }}</p>
+        <h1 class="headline" style="color: var(--teal);">{{ project.title }}</h1>
+        <p class="mono label" style="margin-top: 0.4rem;">
+            {{ project.year }} // REF_ID: 00{{ project.pk }}
+            {% if project.role %} // {{ project.role }}{% endif %}
+        </p>
+    </div>
+    {% if project.status %}
+    <div style="border: 1px solid var(--teal); padding: 0.4rem 1rem; margin-top: 0.5rem;">
+        <p class="label label-teal" style="font-size: 0.65rem;">STATUS</p>
+        <p class="mono" style="color: var(--teal); font-size: 1rem;">{{ project.status }}</p>
+    </div>
+    {% endif %}
 </div>
 
-<div class="grid" style="grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: start;">
+<!-- Main image -->
+{% if project.screenshot_1 %}
+<div style="border: 2px solid var(--teal); background: #111; margin-bottom: 2.5rem;">
+    <img src="{{ project.screenshot_1.url }}" alt="{{ project.title }}" style="width: 100%; height: auto; display: block;">
+</div>
+{% else %}
+<div style="border: 2px solid var(--outline); background: #111; height: 320px; display: flex; align-items: center; justify-content: center; margin-bottom: 2.5rem;">
+    <span class="mono label">[ NO_IMAGE ]</span>
+</div>
+{% endif %}
 
-    <!-- Main image -->
-    <div style="border: 2px solid var(--teal); background: #111;">
-        {% if project.screenshot_1 %}
-            <img id="main-viewer" src="{{ project.screenshot_1.url }}" alt="{{ project.title }}"
-                 style="width: 100%; height: auto;">
-        {% else %}
-            <div style="height: 360px; display: flex; align-items: center; justify-content: center;">
-                <span class="mono label">[ NO_IMAGE ]</span>
-            </div>
-        {% endif %}
-    </div>
+<!-- Content -->
+<div class="grid" style="grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
 
-    <!-- Sidebar -->
+    <!-- Left: narrative -->
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
 
-      <div class="grid grid-2" style="gap: 1rem;">
-            <div class="card">
-                <p style="color: var(--red); margin-bottom: 0.4rem;">STATUS</p>
-                <p class="mono" style="font-size: 1.1rem;">{{ project.status }}</p>
-            </div>
-            <div class="card">
-                <p style="color: var(--red); margin-bottom: 0.4rem;">ROLE</p>
-                <p class="mono"style="font-size: 1.1rem;">{{ project.role }}</p>
-            </div>
-        </div>
-
+        {% if project.desc %}
         <div class="card">
             <p class="label label-teal" style="margin-bottom: 0.75rem;">DESCRIPTION</p>
-            <p class="mono" style="line-height: 1.7; font-size: 0.95rem;">{{ project.desc }}</p>
+            <p style="line-height: 1.75; color: var(--dim); font-size: 0.95rem;">{{ project.desc }}</p>
         </div>
+        {% endif %}
+
+        {% if project.features %}
+        <div class="card">
+            <p class="label label-teal" style="margin-bottom: 0.75rem;">FEATURES & CONTRIBUTIONS</p>
+            <p class="mono" style="line-height: 1.9; font-size: 0.9rem; color: var(--dim); white-space: pre-line;">{{ project.features }}</p>
+        </div>
+        {% endif %}
+
+        {% if project.challenges %}
+        <div class="card">
+            <p class="label label-red" style="margin-bottom: 0.75rem;">CHALLENGES & SOLUTIONS</p>
+            <p class="mono" style="line-height: 1.9; font-size: 0.9rem; color: var(--dim); white-space: pre-line;">{{ project.challenges }}</p>
+        </div>
+        {% endif %}
+
+        {% if project.lessons %}
+        <div class="card">
+            <p class="label" style="margin-bottom: 0.75rem;">WHAT I LEARNED</p>
+            <p style="line-height: 1.75; color: var(--dim); font-size: 0.95rem; font-style: italic;">{{ project.lessons }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Right: metadata -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
 
         <div class="card">
             <p class="label label-teal" style="margin-bottom: 0.75rem;">TECH STACK</p>
-            <p class="mono" style="font-size: 1rem;">{{ project.tech_stack }}</p>
+            {% for item in project.tech_list %}
+                <p class="mono" style="font-size: 0.9rem; color: var(--dim); line-height: 2;"> {{ item }}</p>
+            {% endfor %}
         </div>
+
+        {% if project.github %}
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="label">SOURCE</p>
+            <a href="{{ project.github }}" target="_blank" class="mono" style="color: var(--teal); font-size: 0.85rem;">
+                → github.com
+            </a>
+        </div>
+        {% endif %}
 
     </div>
 </div>
 
 <!-- Thumbnail strip -->
-{% if project.screenshot_1 or project.screenshot_2 or project.screenshot_3 %}
-<div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2.5rem;">
-    {% if project.screenshot_1 %}
-    <div style="border: 1px solid var(--outline); max-width: 20rem;">
-        <img src="{{ project.screenshot_1.url }}" style="width: 100%; height: auto;">
+{% if project.screenshot_2 or project.screenshot_3 %}
+<div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--outline);">
+    <p class="breadcrumb" style="margin-bottom: 1rem;">// SCREENSHOTS</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        {% if project.screenshot_1 %}
+        <div style="border: 1px solid var(--outline);">
+            <img src="{{ project.screenshot_1.url }}" style="width: 100%; height: auto;">
+        </div>
+        {% endif %}
+        {% if project.screenshot_2 %}
+        <div style="border: 1px solid var(--outline);">
+            <img src="{{ project.screenshot_2.url }}" style="width: 100%; height: auto;">
+        </div>
+        {% endif %}
+        {% if project.screenshot_3 %}
+        <div style="border: 1px solid var(--outline);">
+            <img src="{{ project.screenshot_3.url }}" style="width: 100%; height: auto;">
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
-    {% if project.screenshot_2 %}
-    <div style="border: 1px solid var(--outline); max-width: 20rem;">
-        <img src="{{ project.screenshot_2.url }}" style="width: 100%; height: auto;">
-    </div>
-    {% else %}
-    <div style="border: 1px solid var(--outline);  display: flex; max-width: 20rem; align-items: center; justify-content: center;">
-        <span class="mono label">[ NO_IMAGE ]</span>
-    </div>
-    {% endif %}
-    {% if project.screenshot_3 %}
-    <div style="border: 1px solid var(--outline); max-width: 20rem">
-        <img src="{{ project.screenshot_3.url }}" style="width: 100%; height: auto;">
-    </div>
-    {% else %}
-    <div style="border: 1px solid var(--outline);  display: flex; max-width: 20rem; align-items: center; justify-content: center;">
-        <span class="mono label">[ NO_IMAGE ]</span>
-    </div>
-    {% endif %}
 </div>
 {% endif %}
 
