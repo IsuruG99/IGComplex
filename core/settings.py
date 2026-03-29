@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portfolio',
     'hub',
+    'album',
     'storages',
     'django_cleanup.apps.CleanupConfig'
 ]

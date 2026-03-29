@@ -25,4 +25,5 @@ urlpatterns = [
 
     path('', include('portfolio.urls')),
     path('', include('hub.urls')),
+    path('', include('album.urls')),
 ]

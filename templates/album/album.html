@@ -29,12 +29,11 @@
         <div class="card" style="text-align: center;">
             <h1 class="headline" style="color: var(--teal); font-size: 2rem;">Family Repo</h1>
             <p class="mono" style="color: var(--dim); margin-top: 0.5rem;">Photo Album and Documents</p>
-            <a href="{% url 'album' %}" class="btn btn-teal" style="margin-top: 1rem;">Family Album</a>
         </div>
         <div class="card" style="text-align: center;">
             <h1 class="headline" style="color: var(--red); font-size: 2rem;">Game Tracker</h1>
             <p class="mono" style="color: var(--dim); margin-x: 0.5rem;">Pity Tracker and Upcoming Releases</p>
-            <a href="{% url 'tracker' %}" class="btn btn-red" style="margin-top: 1rem;">Pity Tracker</a>
+            <a href="{% url 'tracker' %}" class="btn btn-red">Pity Tracker</a>
         </div>
     {% else %}
         <div class="card" style="text-align: center;">
@@ -52,3 +51,5 @@
     {% endif %}
 </div>
 {% endblock %}
+
+
