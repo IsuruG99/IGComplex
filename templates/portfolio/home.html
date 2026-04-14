@@ -28,8 +28,8 @@
     {% if user.is_authenticated %}
         <div class="card" style="text-align: center;">
             <h1 class="headline" style="color: var(--teal); font-size: 2rem;">Family Repo</h1>
-            <p class="mono" style="color: var(--dim); margin-top: 0.5rem;">Photo Album and Documents</p>
-            <a href="{% url 'album' %}" class="btn btn-teal" style="margin-top: 1rem;">Family Album</a>
+            <p class="mono" style="color: var(--dim); margin-top: 0.5rem;">Undecided</p>
+            <a href="{% url 'tracker' %}" class="btn btn-teal" style="margin-top: 1rem;">None Yet</a>
         </div>
         <div class="card" style="text-align: center;">
             <h1 class="headline" style="color: var(--red); font-size: 2rem;">Game Tracker</h1>
@@ -38,17 +38,29 @@
         </div>
     {% else %}
         <div class="card" style="text-align: center;">
-            <h1 class="headline" style="color: var(--teal); font-size: 2rem;">Status</h1>
-            <span class="mono" style="color: var(--teal);">Goals</span>
-            <p class="mono" style="color: var(--dim); margin-bottom: 0.85rem;">Self Learning and Getting an internship<p>
-            <span class="mono" style="color: var(--teal);">Learning</span>
-            <p class="mono" style="color: var(--dim); margin-bottom: 0.85rem;"> Building a private, containerized environment using <span style="color: var(--teal);">Django</span> and <span style="color: var(--teal);">Supabase</span> 
-                towards hosting secure media storage and family-only utilities.<p>
-            <span class="mono" style="color: var(--teal);">Volunteer Work</span>
-            <p class="mono" style="color: var(--dim); margin-bottom: 0.85rem;">Assisting a colleague with cloud infrastructure—handling 
-                <span style="color: var(--teal);">AWS</span> deployment support and general Backend troubleshooting.</p>
-            <p class="mono" style="color: var(--dim);">...</p>
+            <h1 class="headline" style="color: var(--teal); font-size: 2rem;">My Journey</h1>
+            <p class="mono" style="color: var(--dim); margin-top: 0.5rem;">TBA</p>
+            <a href="" class="btn btn-teal" style="margin-top: 1rem;">(TBA)</a>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h1 class="headline" style="color: var(--red); font-size: 2rem;">[Module TBA]</h1>
+            <p class="mono" style="color: var(--dim); margin-top: 0.5rem;">Undecided</p>
+            <a href="" class="btn btn-red" style="margin-top: 1rem;">...</a>
         </div>
     {% endif %}
+</div>
+<div class="grid grid-auto" style="padding-top: 1.5rem;">
+    <div class="card" style="text-align: center;">
+        <h1 class="headline" style="color: var(--teal); font-size: 2rem;">Status</h1>
+        <span class="mono" style="color: var(--teal);">Goals</span>
+        <p class="mono" style="color: var(--dim); margin-bottom: 0.85rem;">Self Learning and Getting an internship<p>
+        <span class="mono" style="color: var(--teal);">Learning</span>
+        <p class="mono" style="color: var(--dim); margin-bottom: 0.85rem;"> Building a private, containerized environment using <span style="color: var(--teal);">Django</span> and <span style="color: var(--teal);">Supabase</span> 
+            towards hosting secure media storage and family-only utilities.<p>
+        <span class="mono" style="color: var(--teal);">Volunteer Work</span>
+        <p class="mono" style="color: var(--dim); margin-bottom: 0.85rem;">Assisting a colleague with cloud infrastructure—handling 
+            <span style="color: var(--teal);">AWS</span> deployment support and general Backend troubleshooting.</p>
+        <p class="mono" style="color: var(--dim);">...</p>
+    </div>
 </div>
 {% endblock %}

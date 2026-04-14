@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portfolio',
     'hub',
-    'album',
     'storages',
     'django_cleanup.apps.CleanupConfig'
 ]
@@ -41,6 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 ROOT_URLCONF = 'core.urls'
+WSGI_APPLICATION = 'core.wsgi.application'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -55,36 +55,72 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'core.wsgi.application'
-
-# Supabase S3 Configuration
-AWS_ACCESS_KEY_ID = env('SUPABASE_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = env('SUPABASE_SECRET_KEY')
-AWS_S3_ENDPOINT_URL = env('SUPABASE_STORAGE_URL')
-
-AWS_S3_REGION_NAME = 'ap-south-1' 
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_VERIFY = True
 
 # Database: https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 DATABASES = {
     'default': env.db(),
 }
 
+STORAGES = {
+    # ── Static files (unchanged — served from disk / whitenoise in prod) ─────
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+ 
+    # Main Storage: Supabase S3 (portfolio public assets) ────────────────
+    # Use this explicitly when saving project screenshots, the avatar, CV, etc.
+    # e.g.:  from django.core.files.storage import storages
+    #        supabase_storage = storages["supabase"]
+    "supabase": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "access_key":        env('SUPABASE_ACCESS_KEY'),
+            "secret_key":        env('SUPABASE_SECRET_KEY'),
+            "bucket_name":       env('SUPABASE_BUCKET_NAME'),
+            "endpoint_url":      env('SUPABASE_STORAGE_URL'),
+            "region_name":       env('SUPABASE_REGION', default='ap-south-1'),
+            # Supabase public bucket → no auth on read
+            "default_acl":       "public-read",
+            "querystring_auth":  False,
+            "signature_version": "s3v4",
+        },
+    },
+
+    # To be Implemented
+    # Image Storage: CLOUD R2 (Blog related assets)
+    # NOT used directly, (we generate presigned URLs ourselves)
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "access_key":        env('R2_ACCESS_KEY_ID'),
+            "secret_key":        env('R2_SECRET_ACCESS_KEY'),
+            "bucket_name":       env('R2_BUCKET_NAME'),
+            "endpoint_url":      env('R2_ENDPOINT_URL'),
+            # R2 has no region concept but boto3 requires something:
+            "region_name":       "auto",
+            # Don't expose the bucket in the URL — we use presigned URLs:
+            "custom_domain":     None,
+            "default_acl":       None,   # R2 ignores ACL; set to None
+            "querystring_auth":  True,   # presigned URLs
+            "signature_version": "s3v4",
+        },
+    },
+}
+
+# Redis Cache (Temporaily Off)
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": env('REDIS_URL', default='redis://localhost:6379/0'),
+#     }
+# }
+
 # Password validation: https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
 # Internationalization: https://docs.djangoproject.com/en/6.0/topics/i18n/

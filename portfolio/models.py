@@ -1,13 +1,29 @@
 from django.db import models
+import os
 from storages.backends.s3boto3 import S3Boto3Storage
 
 class PortfolioScreenshotStorage(S3Boto3Storage):
     bucket_name = 'portfolio'
     location = 'screenshots' 
 
+    endpoint_url = os.getenv('SUPABASE_STORAGE_URL')
+    access_key = os.getenv('SUPABASE_ACCESS_KEY')
+    secret_key = os.getenv('SUPABASE_SECRET_KEY')
+    region_name = os.getenv('SUPABASE_REGION', 'ap-south-1')
+    querystring_auth = True 
+    default_acl = 'public-read'
+    signature_version = 's3v4'
+
 class PortfolioStorage(S3Boto3Storage):
     bucket_name = 'portfolio'
     location = 'others'
+    endpoint_url = os.getenv('SUPABASE_STORAGE_URL')
+    access_key = os.getenv('SUPABASE_ACCESS_KEY')
+    secret_key = os.getenv('SUPABASE_SECRET_KEY')
+    region_name = os.getenv('SUPABASE_REGION', 'ap-south-1')
+    querystring_auth = True 
+    default_acl = 'public-read'
+    signature_version = 's3v4'
 
 class Project(models.Model):
     """
