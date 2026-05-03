@@ -31,6 +31,10 @@ body {
     flex-direction: column;
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -64,6 +68,7 @@ ul { list-style: none; }
 
 .label-teal { color: var(--teal); }
 .label-red  { color: var(--red);  }
+.heading-teal { color: var(--teal); }
 
 /* ─── LAYOUT ─────────────────────────────────────────────────── */
 .container {
@@ -147,6 +152,12 @@ footer .container {
     padding: 1.75rem;
 }
 
+.card-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
 .page-header {
     margin-bottom: 3rem;
     padding-bottom: 2rem;
@@ -165,6 +176,63 @@ footer .container {
     font-size: 0.75rem;
     color: var(--muted);
     letter-spacing: 0.15em;
+}
+
+.text-secondary {
+    color: var(--dim);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.terminal-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card-divider {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--outline);
+}
+
+.home-hero-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+    min-height: 100%;
+}
+
+.home-hero-copy {
+    max-width: 34rem;
+}
+
+.home-hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-top: 0.5rem;
+}
+
+.home-hero-text {
+    max-width: 30rem;
+}
+
+.home-hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 /* ─── BUTTONS ────────────────────────────────────────────────── */
@@ -223,6 +291,124 @@ footer .container {
 .divider-teal { border-bottom: 2px solid var(--teal); }
 .divider-red  { border-bottom: 2px solid var(--red);  }
 
+.blog-feed {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.blog-article-title {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.1;
+}
+
+.blog-article-copy p + p {
+    margin-top: 0.85rem;
+}
+
+.blog-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 0.25rem;
+    border-top: 1px solid var(--outline);
+}
+
+.blog-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.blog-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.blog-modal[hidden] {
+    display: none;
+}
+
+.blog-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 7, 7, 0.86);
+}
+
+.blog-modal-dialog {
+    position: relative;
+    width: min(960px, 100%);
+    max-height: calc(100vh - 3rem);
+    padding: 1.25rem;
+    background: rgba(19, 19, 19, 0.94);
+    border: 1px solid var(--outline);
+    backdrop-filter: blur(10px);
+}
+
+.blog-modal-header,
+.blog-modal-footer,
+.blog-modal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.blog-modal-header {
+    margin-bottom: 1rem;
+}
+
+.blog-modal-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--outline);
+    flex-wrap: wrap;
+}
+
+.blog-modal-stage {
+    position: relative;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--outline);
+    min-height: 280px;
+}
+
+.blog-slide {
+    display: none;
+    margin: 0;
+}
+
+.blog-slide.is-active {
+    display: block;
+}
+
+.blog-slide-image {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    background: #101010;
+}
+
+.blog-slide figcaption {
+    padding: 0.85rem 1rem;
+}
+
+.blog-modal-close {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
 /* ─── SCROLLBAR ──────────────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--outline); }
@@ -232,4 +418,22 @@ footer .container {
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .col-span-2       { grid-column: span 1; }
     .nav-links        { gap: 1rem; }
+    .blog-modal {
+        padding: 0.75rem;
+    }
+    .blog-modal-dialog {
+        max-height: calc(100vh - 1.5rem);
+        padding: 1rem;
+    }
+    .blog-modal-footer,
+    .blog-modal-nav {
+        width: 100%;
+    }
+    .blog-modal-nav {
+        justify-content: stretch;
+    }
+    .blog-modal-nav .btn {
+        flex: 1;
+        text-align: center;
+    }
 }

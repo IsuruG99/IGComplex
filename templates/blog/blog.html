@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <p class="breadcrumb">// DIRECTORY: /home/igcomplex/blog</p>
+    <h1 class="headline">Blog <span style="color: var(--red);">Feed</span></h1>
+    <p class="text-secondary" style="margin-top: 0.75rem; max-width: 44rem;">
+        Notes, build logs, and portfolio-adjacent writeups. Newer entries stay at the top and images open inline.
+    </p>
+</div>
+
+<div class="blog-feed">
+
+    {% for article in articles %}
+    <article class="card card-stack blog-article">
+        <p class="breadcrumb">ID: [{{ article.id }}]</p>
+        <h2 class="headline heading-teal blog-article-title">{{ article.title }}</h2>
+
+        <div class="meta-row card-divider">
+            <span class="mono label">{{ article.start_date|date:'Y-m-d' }}</span>
+            <span class="mono label">
+                {% if article.end_date %}
+                    {{ article.end_date|date:'Y-m-d' }}
+                {% else %}
+                    ongoing
+                {% endif %}
+            </span>
+        </div>
+
+        {% if article.description %}
+            <div class="text-secondary blog-article-copy">{{ article.description|linebreaksbr }}</div>
+        {% else %}
+            <p class="text-secondary">No description added yet.</p>
+        {% endif %}
+
+        <div class="blog-actions">
+            <span class="mono label">{{ article.images|length }} image{{ article.images|length|pluralize }}</span>
+            {% if article.images %}
+                <button type="button" class="btn btn-outline-teal blog-modal-open" data-modal-target="article-modal-{{ article.id }}">
+                    View images
+                </button>
+            {% else %}
+                <span class="mono label">[ NO_IMAGE_DATA ]</span>
+            {% endif %}
+        </div>
+
+        {% if article.images %}
+        <div class="blog-modal" id="article-modal-{{ article.id }}" hidden>
+            <div class="blog-modal-backdrop" data-modal-close></div>
+            <div class="blog-modal-dialog">
+                <div class="blog-modal-header">
+                    <p class="breadcrumb">ID: [{{ article.id }}]</p>
+                    <button type="button" class="blog-modal-close" data-modal-close aria-label="Close image viewer">×</button>
+                </div>
+                <div class="blog-modal-stage" data-slideshow>
+                    {% for image in article.images %}
+                    <figure class="blog-slide{% if forloop.first %} is-active{% endif %}" data-slide>
+                        <img src="{{ image.url }}" alt="{{ article.title }} image {{ forloop.counter }}" class="blog-slide-image">
+                        <figcaption class="terminal-meta">IMG {{ forloop.counter }} / {{ article.images|length }}</figcaption>
+                    </figure>
+                    {% endfor %}
+                </div>
+                <div class="blog-modal-footer">
+                    <span class="terminal-meta" data-slide-counter>1 / {{ article.images|length }}</span>
+                    {% if article.images|length > 1 %}
+                    <div class="blog-modal-nav">
+                        <button type="button" class="btn btn-outline-teal blog-modal-prev">Prev</button>
+                        <button type="button" class="btn btn-outline-teal blog-modal-next">Next</button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </article>
+    {% empty %}
+    <div class="card blog-empty-state">
+        <p class="mono label">0 articles found in database.</p>
+        <p class="text-secondary" style="margin-top: 0.5rem;">Add entries through admin when you are ready to publish.</p>
+    </div>
+    {% endfor %}
+
+</div>
+
+<script>
+    (() => {
+        const body = document.body;
+        const modals = [...document.querySelectorAll('.blog-modal')];
+
+        const setSlide = (modal, nextIndex) => {
+            const slides = [...modal.querySelectorAll('[data-slide]')];
+            if (!slides.length) {
+                return;
+            }
+
+            const index = (nextIndex + slides.length) % slides.length;
+            modal.dataset.index = String(index);
+
+            slides.forEach((slide, slideIndex) => {
+                slide.classList.toggle('is-active', slideIndex === index);
+            });
+
+            const counter = modal.querySelector('[data-slide-counter]');
+            if (counter) {
+                counter.textContent = `${index + 1} / ${slides.length}`;
+            }
+        };
+
+        const openModal = (modal) => {
+            modal.hidden = false;
+            body.classList.add('modal-open');
+            setSlide(modal, Number(modal.dataset.index || 0));
+        };
+
+        const closeModal = (modal) => {
+            modal.hidden = true;
+            body.classList.remove('modal-open');
+        };
+
+        document.querySelectorAll('.blog-modal-open').forEach((button) => {
+            button.addEventListener('click', () => {
+                const modal = document.getElementById(button.dataset.modalTarget);
+                if (modal) {
+                    openModal(modal);
+                }
+            });
+        });
+
+        modals.forEach((modal) => {
+            modal.dataset.index = '0';
+
+            modal.querySelectorAll('[data-modal-close]').forEach((element) => {
+                element.addEventListener('click', () => closeModal(modal));
+            });
+
+            const prevButton = modal.querySelector('.blog-modal-prev');
+            if (prevButton) {
+                prevButton.addEventListener('click', () => {
+                    setSlide(modal, Number(modal.dataset.index || 0) - 1);
+                });
+            }
+
+            const nextButton = modal.querySelector('.blog-modal-next');
+            if (nextButton) {
+                nextButton.addEventListener('click', () => {
+                    setSlide(modal, Number(modal.dataset.index || 0) + 1);
+                });
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const activeModal = modals.find((modal) => !modal.hidden);
+            if (!activeModal) {
+                return;
+            }
+
+            if (event.key === 'Escape') {
+                closeModal(activeModal);
+            }
+
+            if (event.key === 'ArrowLeft') {
+                setSlide(activeModal, Number(activeModal.dataset.index || 0) - 1);
+            }
+
+            if (event.key === 'ArrowRight') {
+                setSlide(activeModal, Number(activeModal.dataset.index || 0) + 1);
+            }
+        });
+    })();
+</script>
+
+{% endblock %}
